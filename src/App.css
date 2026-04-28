@@ -1,5 +1,53 @@
-.div1 { 
-  display: flex;
-  justify-content: center;
-  
+/* خط 1-4: استایل عمومی برای همه المان‌ها */
+* {
+  margin: 0;        /* حذف فاصله خارجی پیش‌فرض */
+  padding: 0;       /* حذف فاصله داخلی پیش‌فرض */
+  box-sizing: border-box; /* عرض و ارتفاع شامل padding و border می‌شود */
+}
+
+/* خط 6-11: استایل بدنه صفحه */
+body {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  /* گرادینت از بنفش روشن به بنفش تیره */
+  min-height: 100vh;  /* حداقل ارتفاع برابر با کل صفحه */
+  font-family: 'Segoe UI', ...;  /* فونت زیبا */
+  padding: 20px;      /* فاصله از لبه‌های صفحه */
+}
+
+/* خط 28-35: کادر سفید وسط صفحه */
+.todo-wrapper {
+  background: white;
+  border-radius: 20px;  /* گوشه‌های گرد */
+  width: 100%;
+  max-width: 600px;    /* حداکثر عرض، بیشتر از این نمیشه */
+  padding: 30px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1); /* سایه زیبا */
+}
+
+/* خط 68-75: افکت هاور روی دکمه افزودن */
+.add-btn:hover {
+  background: #5a67d8;   /* تیره‌تر شدن رنگ */
+  transform: translateY(-2px); /* 2 پیکسل بالا آمدن */
+  /* این transform باعث می‌شود دکمه کمی بالا بیاید */
+}
+
+/* خط 109-115: افکت هاور روی هر آیتم لیست */
+.todo-item:hover {
+  background: #f0f0f0;     /* پس‌زمینه کمی تیره‌تر */
+  transform: translateX(5px); /* 5 پیکسل به راست حرکت می‌کند */
+}
+
+/* خط 126-133: استایل input ویرایش */
+.edit-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 2px solid #667eea;  /* حاشیه بنفش */
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+/* خط 152-157: افکت هاور روی دکمه ویرایش */
+.edit-btn:hover {
+  background: #ffb300;
+  transform: scale(1.05);  /* 5 درصد بزرگتر می‌شود */
 }
