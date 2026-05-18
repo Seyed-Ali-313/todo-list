@@ -3,7 +3,20 @@ import './App.css';
 
 function App() {
 
-  const [todos , setTodos] = useState([]); 
+function Reducer  (state , action) { 
+  switch(action.type) {
+    case "add" :  
+      return  [...state , action.payload]; 
+    case "delete" :
+      return  state.filter((todo)=> todo.id !== action.payload.id )
+    case "edit" :
+      return  state.map((todo)=> todo.id === action.payload.id ? { ...todo , text : action.payload.text } : todo ) ;   
+    case "toggle" :
+      return  state.map((todo) => todo.id === action.payload.id ? {...todo , status: !todo.status } : todo );   
+  }
+}
+
+  const [state , dispatch] = useReducer(Reducer , []); 
   const [textTodos , setTextTodos] = useState('');
   const [editId , setEditId] = useState(null);
   const [editText , setEditText] = useState('');
@@ -24,14 +37,13 @@ function App() {
       status : false
     };
 
-    setTodos((prev) => [...prev , newTodo ]);
+    dispatch({type: "add" , payload : newTodo})
     setTextTodos('');
     setError('');
   };
 
-  const deleteTodo = (id) => {
-    setTodos((prev) => prev.filter((todo) => todo.id !== id));
-  };
+
+  
 
   const startEdit = (todo) => { 
     setEditId(todo.id);
@@ -45,11 +57,8 @@ function App() {
       return;
     }
 
-    setTodos((prev) =>
-      prev.map((todo) =>
-        todo.id === editId ? { ...todo, text: trim } : todo
-      )
-    );
+    dispatch({type : "edit" , payload : {id :editId , text :editText  }})
+    ;
     
     setEditId(null);
     setEditText('');
@@ -62,9 +71,7 @@ function App() {
     setError('');
   };
 
-  const toggle = (id) => {       
-      setTodos((prev) => prev.map((todo) => todo.id === id ? { ...todo, status: !todo.status } : todo));
-  };
+
   return ( 
     <div className="container">
 
@@ -84,7 +91,7 @@ function App() {
       {error && <p className="error">{error}</p>}
 
       <ul className="todo-list">
-        {todos.map((todo) => (
+        {state.map((todo) => (
           <li className="todo-item" key={todo.id}>
             
             {editId === todo.id ? (
@@ -101,12 +108,12 @@ function App() {
               </>
             ) : (
               <>
-                <button onClick={() => toggle(todo.id)}>👍</button>
+                <button onClick={() => dispatch({type: "toggle" , payload : todo })}>👍</button>
                 <span className={`todo-text ${todo.status ? "active" : ""}`}>{todo.text}</span>
 
 
                 <button className="btn edit-btn" onClick={() => startEdit(todo)}>Edit</button>
-                <button className="btn delete-btn" onClick={() => deleteTodo(todo.id)}>Delete</button>
+                <button className="btn delete-btn" onClick={() => dispatch({type : "delete" , payload : todo})}>Delete</button>
               </>
             )}
 
@@ -114,10 +121,10 @@ function App() {
         ))}
       </ul>
 
-      {todos.length === 0 && <p className="empty">No Todo Work ...</p>}
+      {state.length === 0 && <p className="empty">No Todo Work ...</p>}
 
     </div>
   );
-}
 
+};
 export default App;
