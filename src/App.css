@@ -39,6 +39,7 @@
 
 .todo-text {
   flex: 1;
+  
 }
 
 .btn {
@@ -76,4 +77,8 @@
 .empty {
   text-align: center;
   color: #666;
+}
+.active { 
+  color: red;
+  text-decoration: line-through;
 }

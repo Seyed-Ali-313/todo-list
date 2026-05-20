@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useReducer, useState } from 'react';
 import './App.css';
 
 function App() {
   
+
+
   const [todos , setTodos] = useState([]); 
   const [textTodos , setTextTodos] = useState('');
   const [editId , setEditId] = useState(null);
@@ -20,7 +22,8 @@ function App() {
 
     const newTodo = { 
       id : Date.now(),
-      text : trim 
+      text : trim ,
+      status : false
     };
 
     setTodos((prev) => [...prev , newTodo ]);
@@ -61,6 +64,10 @@ function App() {
     setError('');
   };
 
+  const toggle = (id) => { setTodos((prev) => prev.map((todo) => todo.id === id ? { ...todo, status: !todo.status } : todo)
+  );
+
+  };
   return ( 
     <div className="container">
 
@@ -97,7 +104,9 @@ function App() {
               </>
             ) : (
               <>
-                <span className="todo-text">{todo.text}</span>
+                <button onClick={() => toggle(todo.id)}>👍</button>
+                <span className={`todo-text ${todo.status ? "active" : ""}`}>{todo.text}</span>
+
 
                 <button className="btn edit-btn" onClick={() => startEdit(todo)}>Edit</button>
                 <button className="btn delete-btn" onClick={() => deleteTodo(todo.id)}>Delete</button>
